@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auras Barbería - Reserva tu cita</title>
+    <style>
+        /* Colores personalizados */
+        :root {
+            --negro: #333333;    /* Negro */
+            --blanco: #ffffff;   /* Blanco */
+            --cromado: #c0c0c0;   /* Cromado (gris metálico) */
+        }
+
+        /* Estilo general */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--blanco);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--negro);
+            color: var(--blanco);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form-section {
+            background-color: var(--blanco);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: 2px solid var(--cromado); /* Bordes cromados */
+        }
+
+        h2 {
+            color: var(--negro);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--negro);
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid var(--cromado); /* Bordes cromados */
+            font-size: 16px;
+        }
+
+        button {
+            background-color: var(--negro);
+            color: var(--blanco);
+            cursor: pointer;
+            border: 1px solid var(--cromado); /* Bordes cromados */
+        }
+
+        button:hover {
+            background-color: var(--cromado);
+            color: var(--negro);
+            border: 1px solid var(--negro); /* Bordes cromados en hover */
+        }
+
+        /* Estilo para el mensaje de cita */
+        .form-section #mensaje-cita-section {
+            background-color: var(--blanco);
+            padding: 15px;
+            border: 1px solid var(--cromado);
+            border-radius: 5px;
+        }
+
+        /* Estilo para los enlaces */
+        a {
+            text-decoration: none;
+        }
+
+        a button {
+            background-color: var(--cromado);
+            color: var(--negro);
+            border: 1px solid var(--cromado);
+        }
+
+        a button:hover {
+            background-color: var(--negro);
+            color: var(--blanco);
+            border: 1px solid var(--negro);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Auras Barbería</h1>
+    <p>Reserva tu cita y disfruta de un corte excelente.</p>
+</header>
+
+<div class="container">
+    <div class="form-section">
+        <h2>Agendar Cita</h2>
+        <form id="appointment-form">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+
+            <label for="fecha">Fecha de la cita</label>
+            <input type="date" id="fecha" name="fecha" required>
+
+            <label for="hora">Hora de la cita</label>
+            <!-- Campo de hora de 7 AM a 7 PM -->
+            <select id="hora" name="hora" required>
+                <option value="07:00">07:00 AM</option>
+                <option value="08:00">08:00 AM</option>
+                <option value="09:00">09:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="13:00">01:00 PM</option>
+                <option value="14:00">02:00 PM</option>
+                <option value="15:00">03:00 PM</option>
+                <option value="16:00">04:00 PM</option>
+                <option value="17:00">05:00 PM</option>
+                <option value="18:00">06:00 PM</option>
+                <option value="19:00">07:00 PM</option>
+            </select>
+
+            <label for="servicio">Servicio</label>
+            <select id="servicio" name="servicio" required>
+                <option value="Corte Sencillo">Corte Sencillo</option>
+                <option value="Corte con Barba">Corte con Barba</option>
+                <option value="Corte para Niño">Corte para Niño</option>
+                <option value="Solo Barba">Solo Barba</option>
+                <option value="Mascarilla Facial">Mascarilla Facial</option>
+            </select>
+
+            <button type="submit">Generar Enlace de Cita</button>
+        </form>
+    </div>
+
+    <div class="form-section" id="mensaje-cita-section" style="display:none;">
+        <h2>Tu mensaje para confirmar la cita:</h2>
+        <p id="mensaje-cita"></p>
+        <a id="enviar-mensaje" href="" target="_blank">
+            <button>Compartir Enlace de Cita</button>
+        </a>
+    </div>
+</div>
+
+<script>
+    // Función que maneja la generación del mensaje y la visualización
+    document.getElementById("appointment-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe de forma tradicional
+
+        // Obtener los valores del formulario
+        const nombre = document.getElementById("nombre").value;
+        const fecha = document.getElementById("fecha").value;
+        const hora = document.getElementById("hora").value;
+        const servicio = document.getElementById("servicio").value;
+
+        // Crear el mensaje que se enviará por WhatsApp
+        const mensaje = `¡Hola! Soy ${nombre}. Quiero agendar una cita en Auras Barbería para el ${fecha} a las ${hora}. El servicio solicitado es: ${servicio}.`;
+
+        // Mostrar el mensaje y el botón para enviar el WhatsApp
+        document.getElementById("mensaje-cita").textContent = mensaje;
+
+        // Aquí debes reemplazar 34612345678 con tu número de teléfono real en formato internacional
+        const whatsappLink = `https://wa.me/+573206586575?text=${encodeURIComponent(mensaje)}`;  // Reemplaza con tu número real de WhatsApp
+
+        // Establecer el enlace de WhatsApp
+        document.getElementById("enviar-mensaje").setAttribute("href", whatsappLink);
+
+        // Mostrar la sección del mensaje generado
+        document.getElementById("mensaje-cita-section").style.display = "block";
+    });
+</script>
+
+</body>
+</html>
